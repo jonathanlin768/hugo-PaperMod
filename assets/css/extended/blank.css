@@ -3,3 +3,41 @@ This is just a placeholder blank stylesheet so as to support adding custom style
 
 Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-css-with-themes-assets for more info
 */
+
+/* Shadcn UI-like category tags styling */
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.5rem 0;
+  gap: 0.5rem;
+}
+
+.category-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 0.35rem 0.6rem;
+  background-color: var(--tertiary);
+  color: var(--primary);
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.dark .category-tag {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--secondary);
+}
+
+.category-tag:hover {
+  background-color: var(--secondary);
+  color: var(--theme);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}

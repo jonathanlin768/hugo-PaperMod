@@ -75,7 +75,7 @@
   {{- $isHidden := (.Param "cover.hiddenInList") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" false "isHidden" $isHidden) }}
   <header class="entry-header">
-    <h2 class="entry-hint-parent">
+    <h2 class="entry-hint-parent mb-0">
       {{- .Title }}
       {{- if .Draft }}
       <span class="entry-hint" title="Draft">
@@ -86,6 +86,13 @@
       </span>
       {{- end }}
     </h2>
+    {{- if .Params.categories }}
+    <div class="category-tags">
+      {{- range .Params.categories }}
+      <span class="category-tag">{{ . }}</span>
+      {{- end}}
+    </div>
+    {{- end }}
   </header>
   {{- if (ne (.Param "hideSummary") true) }}
   <div class="entry-content">
