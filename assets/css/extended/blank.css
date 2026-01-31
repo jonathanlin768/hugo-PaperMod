@@ -41,3 +41,29 @@ Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-cs
   transform: translateY(-1px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.cs2stat {
+    width: 330px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+    font-family: stratum2, open sans, microsoft yahei, -apple-system, BlinkMacSystemFont, segoe ui, Roboto, Oxygen, Ubuntu, Cantarell, open sans, helvetica neue, sans-serif;
+}
+
+.cs2stat .cs2stat-value {
+  height: 60px;
+  line-height: 60px;
+  font-size: 36px;
+  text-align: center;
+}
+
+.cs2stat .cs2stat-key {
+  height: 32px;
+  font-size: 20px;
+  line-height: 32px;
+  text-align: center;
+}

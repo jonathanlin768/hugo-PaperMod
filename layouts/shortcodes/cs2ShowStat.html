@@ -1,0 +1,139 @@
+<script>
+  var localStorageKey = "windypath-cs2-stat"
+  $(document).ready(function () {
+    // showCS2Stat()
+    var cacheFriendsData = getItem(localStorageKey);
+    if (cacheFriendsData !== null) {
+      console.log("from cache")
+      showCS2Stat(cacheFriendsData)
+    } else {
+      console.log("not cache")
+      $.get("https://upebtlij2yobnmlt6bd4iu2kxq0hfzdu.lambda-url.ap-southeast-2.on.aws/", function (data) {
+        console.log(data)
+        showCS2Stat(data)
+        setItem(localStorageKey, data)
+      });
+    }
+  });
+
+
+  function setItem(key, value, maxAge = 23 * 60 * 60 * 1000) {
+    // store the value as the object
+    // along with the expiry date
+    let result = {
+      data: value
+    }
+
+
+    if (maxAge) {
+      // set the expiry 
+      // from the current date
+      result.expireTime = Date.now() + maxAge;
+    }
+
+    // stringify the result
+    // and the data in original storage
+    window.localStorage.setItem(key, JSON.stringify(result));
+  }
+
+  function getItem(key) {
+    // get the parsed value of the given key
+    let result = JSON.parse(window.localStorage.getItem(key));
+
+    // if the key has value
+    if (result) {
+
+      // if the entry is expired
+      // remove the entry and return null
+      if (result.expireTime <= Date.now()) {
+        window.localStorage.removeItem(key);
+        return null;
+      }
+
+      // else return the value
+      return result.data;
+    }
+
+    // if the key does not have value
+    return null;
+  }
+
+  function getStatBlock(key, value) {
+    var block = ' \
+      <div class="cs2stat"> \
+        <div> \
+          <div class="cs2stat-value">' + value + '</div> \
+          <div class="cs2stat-key">' + key + '</div> \
+        </div>\
+      </div> \
+    '
+    return block
+  }
+
+  function showCS2Stat(cacheFriendsData) {
+    console.log("show", cacheFriendsData)
+
+    //标题
+    var wmTitleH1 = "<h1>CS2 完美平台数据</h1>"
+    $("div.post-content").append(wmTitleH1)
+
+    let wmData = cacheFriendsData['wm']
+    $("div.post-content").append(getStatBlock('游玩总时长(小时)', wmData['hours']))
+    $("div.post-content").append(getStatBlock('RATING', wmData['rating']))
+    $("div.post-content").append(getStatBlock('胜率', wmData['winRate'].toLocaleString(undefined, {
+      style: 'percent'
+    })))
+    $("div.post-content").append(getStatBlock('KAST', wmData['kast'] + '%'))
+    $("div.post-content").append(getStatBlock('ADR', wmData['adr']))
+    $("div.post-content").append(getStatBlock('RWS', wmData['rws']))
+
+    var fiveETitleH1 = "<h1>CS2 5E平台数据</h1>"
+    $("div.post-content").append(fiveETitleH1)
+
+    let fiveEData = cacheFriendsData['fiveE']
+    $("div.post-content").append(getStatBlock('游玩总时长(小时)', fiveEData['hours']))
+    $("div.post-content").append(getStatBlock('RATING', fiveEData['rating']))
+    $("div.post-content").append(getStatBlock('胜率', fiveEData['winRate'].toLocaleString(undefined, {
+      style: 'percent'
+    })))
+    $("div.post-content").append(getStatBlock('总场次', fiveEData['matchTotal']))
+    $("div.post-content").append(getStatBlock('ADR', fiveEData['adr']))
+    $("div.post-content").append(getStatBlock('RWS', fiveEData['rws']))
+
+    // Object.keys(dataObj['data']).forEach(element => {
+    //   var html = ' \
+    //     <div class="friend-link"> \
+    //       <div class="friend-link-avatar"> \
+    //         <img src="' + dataObj['data'][element]['avatarUrl'] + '"/> \
+    //       </div> \
+    //       <div> \
+    //         <div class="friend-link-name">' + dataObj['data'][element]['name'] + '</div> \
+    //         <div class="friend-link-bio">' + dataObj['data'][element]['bioHTML'] + '</div> \
+    //       </div>\
+    //       <a class="friend-link-button" href="https://github.com/'+ dataObj['data'][element]['login']+'" target="_blank""><i class="fa-brands fa-github"></i></a>\
+    //   '
+    //   if (dataObj['data'][element]['websiteUrl'] != null) { //有个人主页则显示主页链接
+    //     html += '<a class="friend-link-button-2" href="' + dataObj['data'][element]['websiteUrl'] +'" target="_blank"><i class="fa-regular fa-file"></i></i></a></div>'
+    //   } else { //无个人主页则禁止访问
+    //     html += '<a class="friend-link-button-2 friend-link-disabled"><i class="fa-regular fa-file"></i></i></a></div>'
+    //   }
+    //   $("div.post-content").append(html)
+    // });
+  }
+
+</script>
+
+
+<!-- template
+<div class="friend-link">
+  <a href="http://www.baidu.com" target="_blank">
+    <div class="friend-link-avatar">
+      <img src="https://avatars.githubusercontent.com/u/24749960?v=4"/>
+    </div>
+    <div>
+      <div class="friend-link-name">Johnathan Lin</div>
+      <div class="friend-link-bio">Love Coding</div>
+    </div>
+  </a>
+</div>
+  -->

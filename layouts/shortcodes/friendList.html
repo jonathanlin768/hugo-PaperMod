@@ -17,7 +17,7 @@ $( document ).ready(function() {
 
 // add an entry
 // default expiry is 30 days in milliseconds
-function setItem(key, value, maxAge = 30 * 60 * 60 * 1000) {
+function setItem(key, value, maxAge = 30 * 24 * 60 * 60 * 1000) {
     // store the value as the object
     // along with the expiry date
     let result  = {
